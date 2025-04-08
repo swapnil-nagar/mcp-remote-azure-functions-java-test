@@ -9,6 +9,7 @@ import com.microsoft.azure.functions.annotation.AuthorizationLevel;
 import com.microsoft.azure.functions.annotation.CustomBinding;
 import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
+import com.microsoft.azure.functions.annotation.McpToolTrigger;
 
 import java.util.Optional;
 
@@ -44,7 +45,11 @@ public class Function {
 
     @FunctionName("CustomBindingTriggerSample")
     public void logCustomTriggerInput(
-        @CustomBinding(direction = "in", name = "McpHelloWorld", type = "mcpToolTrigger") String customTriggerInput,
+    @McpToolTrigger(
+        toolName = "getsnippets",
+        description = "Gets code snippets from your snippet collection.",
+        toolProperties = "[{\"propertyName\":\"snippetname\",\"propertyType\":\"string\",\"description\":\"The name of the snippet.\"}]"
+        ) String customTriggerInput,
         final ExecutionContext context) {
             context.getLogger().info(customTriggerInput);
             context.getLogger().info("Hello World");
